@@ -15,7 +15,7 @@ public class SportsCourse extends Course {
     public void setTeacher(ITeacher teacher) throws TeacherNotTeachingCourseException {
 
         if (!teacher.isTeaching(courseType)) {
-            throw new TeacherNotTeachingCourseException();
+            throw new TeacherNotTeachingCourseException(courseType);
         }
 
         System.out.println("The new teacher for " + name + " is " + teacher.getFullName());

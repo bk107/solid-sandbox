@@ -5,23 +5,30 @@ import java.util.List;
 
 import University.interfaces.ICourse;
 import University.interfaces.ICourseTeacherPrinter;
-import University.interfaces.IPersonListPrinter;
+import University.interfaces.IStudentListPrinter;
 import University.interfaces.ISubstitionTeacher;
 import University.interfaces.ITeacher;
+import University.printer.PersonListPrinter;
 import University.types.CourseType;
 
-public abstract class Course implements IPersonListPrinter, ICourse, ICourseTeacherPrinter {
+public abstract class Course implements ICourse, ICourseTeacherPrinter {
 
     String name;
     ITeacher teacher;
     ISubstitionTeacher substitionTeacher;
     List<Student> students;
     CourseType courseType;
+    IStudentListPrinter studentListPrinter;
 
     public Course(String name, ITeacher teacher) {
+        this(name, teacher, new PersonListPrinter());
+    }
+
+    public Course(String name, ITeacher teacher, IStudentListPrinter studentListPrinter) {
         this.name = name;
         this.teacher = teacher;
-        students = new ArrayList<Student>();
+        this.studentListPrinter = studentListPrinter;
+        this.students = new ArrayList<Student>();
     }
 
     public void setName(String name) {
@@ -52,17 +59,19 @@ public abstract class Course implements IPersonListPrinter, ICourse, ICourseTeac
         return substitionTeacher;
     }
 
-    @Override
-    public void addStudent(Student student) {
-        students.add(student);
+    public List<Student> getStudents() {
+        return students;
     }
 
     @Override
-    public void printPersonList() {
-        System.out.println("The following students are participating course " + name + ": ");
-        for (Person p : students) {
-            System.out.println(p.getFullName());
-        }
+    public void printStudentList() {
+        System.out.println("The students of " + name + " are: ");
+        studentListPrinter.printStudentList(students);
+    }
+
+    @Override
+    public void addStudent(Student student) {
+        students.add(student);
     }
 
     @Override

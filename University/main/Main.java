@@ -25,8 +25,8 @@ public class Main {
 
         sportsCourse.addStudent(student);
 
-        sportsCourse.printPersonList();
         sportsCourse.printTeacherFullName();
+        sportsCourse.printStudentList();
 
         SportsTutor sportsTutor = new SportsTutor("Jens", "Mirko", LocalDate.of(1970, 3, 22), "jens.mirko@uni.edu");
 
